@@ -478,6 +478,7 @@
         label.textColor = color;
     }
 }
+
 - (UIColor *)dayOfWeekTextColor {
     return (self.dayOfWeekLabels.count > 0) ? ((UILabel *)[self.dayOfWeekLabels lastObject]).textColor : nil;
 }
@@ -498,6 +499,7 @@
 - (void)setDateBorderColor:(UIColor *)color {
     self.calendarContainer.backgroundColor = color;
 }
+
 - (UIColor *)dateBorderColor {
     return self.calendarContainer.backgroundColor;
 }
