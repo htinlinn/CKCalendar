@@ -49,7 +49,7 @@ typedef enum {
 // Theming
 @property (nonatomic, strong) UIFont *titleFont;
 @property (nonatomic, strong) UIColor *titleColor;
-@property (nonatomic, strong) UIFont *dateOfWeekFont;
+@property (nonatomic, strong) UIFont *dayOfWeekFont;
 @property (nonatomic, strong) UIColor *dayOfWeekTextColor;
 @property (nonatomic, strong) UIFont *dateFont;
 

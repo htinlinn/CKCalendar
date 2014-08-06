@@ -23,8 +23,13 @@
 
         calendar.backgroundColor = [UIColor whiteColor];
 		calendar.titleColor = [UIColor blackColor];
+        calendar.titleFont = [UIFont fontWithName:@"GillSans-Bold" size:16.0f];
+        calendar.dayOfWeekFont = [UIFont fontWithName:@"GillSans-Bold" size:12.0f];
+        calendar.dateFont = [UIFont fontWithName:@"GillSans" size:16.0f];
+
         [calendar setDayOfWeekBackgroundColor:[UIColor darkGrayColor]];
         [calendar setDateBorderColor:[UIColor whiteColor]];
+        [calendar setMonthButtonColor:[UIColor orangeColor]];
 
 		self.dateFormatter = [[NSDateFormatter alloc] init];
 		[self.dateFormatter setDateFormat:@"dd/MM/yyyy"];
@@ -119,14 +124,7 @@
 }
 
 - (BOOL)calendar:(CKCalendarView *)calendar willChangeToMonth:(NSDate *)date {
-	if ([date laterDate:self.minimumDate] == date) {
-		self.calendar.backgroundColor = [UIColor blueColor];
-		return YES;
-	}
-	else {
-		self.calendar.backgroundColor = [UIColor redColor];
-		return NO;
-	}
+    return YES;
 }
 
 - (void)calendar:(CKCalendarView *)calendar didLayoutInRect:(CGRect)frame {
