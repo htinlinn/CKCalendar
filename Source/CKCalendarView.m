@@ -223,8 +223,8 @@
 
 	self.titleLabel.text = [self.dateFormatter stringFromDate:_monthShowing];
 	self.titleLabel.frame = CGRectMake(0, 0, self.bounds.size.width, TOP_HEIGHT);
-	self.prevButton.frame = CGRectMake(BUTTON_MARGIN_X, BUTTON_MARGIN_Y, 48, 38);
-	self.nextButton.frame = CGRectMake(self.bounds.size.width - 48 - BUTTON_MARGIN_X, BUTTON_MARGIN_Y, 48, 38);
+	self.prevButton.frame = CGRectMake(BUTTON_MARGIN_X, BUTTON_MARGIN_Y, self.prevButton.imageView.image.size.width, 38);
+	self.nextButton.frame = CGRectMake(self.bounds.size.width - self.nextButton.imageView.image.size.width - BUTTON_MARGIN_X, BUTTON_MARGIN_Y, self.nextButton.imageView.image.size.width, 38);
 
 	self.calendarContainer.frame = CGRectMake(CALENDAR_MARGIN, CGRectGetMaxY(self.titleLabel.frame), containerWidth, containerHeight);
 	self.daysHeader.frame = CGRectMake(0, 0, self.calendarContainer.frame.size.width, DAYS_HEADER_HEIGHT);
@@ -257,10 +257,11 @@
 	NSUInteger dateButtonPosition = 0;
 	while ([date laterDate:endDate] != date) {
 		DateButton *dateButton = [self.dateButtons objectAtIndex:dateButtonPosition];
-
 		dateButton.date = date;
+
 		CKDateItem *item = [[CKDateItem alloc] init];
-		if ([self _dateIsToday:dateButton.date]) {
+
+        if ([self _dateIsToday:dateButton.date]) {
 			item.textColor = UIColorFromRGB(0xF2F2F2);
 			item.backgroundColor = [UIColor lightGrayColor];
 		}
@@ -602,30 +603,6 @@
 	NSInteger startDay = [self.calendar ordinalityOfUnit:NSDayCalendarUnit inUnit:NSEraCalendarUnit forDate:startDate];
 	NSInteger endDay = [self.calendar ordinalityOfUnit:NSDayCalendarUnit inUnit:NSEraCalendarUnit forDate:endDate];
 	return endDay - startDay;
-}
-
-+ (UIImage *)_imageNamed:(NSString *)name withColor:(UIColor *)color {
-	UIImage *img = [UIImage imageNamed:name];
-
-	UIGraphicsBeginImageContextWithOptions(img.size, NO, [UIScreen mainScreen].scale);
-	CGContextRef context = UIGraphicsGetCurrentContext();
-	[color setFill];
-
-	CGContextTranslateCTM(context, 0, img.size.height);
-	CGContextScaleCTM(context, 1.0, -1.0);
-
-	CGContextSetBlendMode(context, kCGBlendModeColorBurn);
-	CGRect rect = CGRectMake(0, 0, img.size.width, img.size.height);
-	CGContextDrawImage(context, rect, img.CGImage);
-
-	CGContextClipToMask(context, rect, img.CGImage);
-	CGContextAddRect(context, rect);
-	CGContextDrawPath(context, kCGPathFill);
-
-	UIImage *coloredImg = UIGraphicsGetImageFromCurrentImageContext();
-	UIGraphicsEndImageContext();
-
-	return coloredImg;
 }
 
 @end
