@@ -21,26 +21,25 @@
 		self.calendar = calendar;
 		calendar.delegate = self;
 
-//        calendar.backgroundColor = [UIColor whiteColor];
+        calendar.backgroundColor = [UIColor whiteColor];
 		calendar.titleColor = [UIColor blackColor];
-        [calendar setDayOfWeekBackgroundColor:[UIColor grayColor]];
-//        [calendar setDateBorderColor:[UIColor whiteColor]];
-
+        [calendar setDayOfWeekBackgroundColor:[UIColor darkGrayColor]];
+        [calendar setDateBorderColor:[UIColor whiteColor]];
 
 		self.dateFormatter = [[NSDateFormatter alloc] init];
 		[self.dateFormatter setDateFormat:@"dd/MM/yyyy"];
 		self.minimumDate = [self.dateFormatter dateFromString:@"20/09/2012"];
 
 		self.disabledDates = @[
-                               [self.dateFormatter dateFromString:@"05/08/2014"],
-                               [self.dateFormatter dateFromString:@"06/08/2014"],
+                               [self.dateFormatter dateFromString:@"08/08/2014"],
+                               [self.dateFormatter dateFromString:@"09/08/2014"],
                                [self.dateFormatter dateFromString:@"07/08/2014"]
                                ];
 
 		calendar.onlyShowCurrentMonth = NO;
 		calendar.adaptHeightToNumberOfWeeksInMonth = YES;
 
-		calendar.frame = CGRectMake(0, 100, 320, 320);
+		calendar.frame = CGRectMake(0, 50, 320, 320);
 		[self.view addSubview:calendar];
 
 		self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(calendar.frame) + 4, self.view.bounds.size.width, 24)];
@@ -95,9 +94,20 @@
 - (void)calendar:(CKCalendarView *)calendar configureDateItem:(CKDateItem *)dateItem forDate:(NSDate *)date {
 	// TODO: play with the coloring if we want to...
 	if ([self dateIsDisabled:date]) {
-		dateItem.backgroundColor = [UIColor redColor];
-		dateItem.textColor = [UIColor whiteColor];
-	}
+		dateItem.backgroundColor = [UIColor lightGrayColor];
+        dateItem.textColor = [UIColor whiteColor];
+	} else {
+        dateItem.backgroundColor = [UIColor whiteColor];
+        dateItem.selectedBackgroundColor = [UIColor darkGrayColor];
+
+        if ([self.calendar dateIsInCurrentMonth:date]) {
+            dateItem.textColor = [UIColor darkGrayColor];
+            dateItem.selectedTextColor = [UIColor whiteColor];
+        } else {
+            dateItem.textColor = [UIColor lightGrayColor];
+            dateItem.selectedTextColor = [UIColor whiteColor];
+        }
+    }
 }
 
 - (BOOL)calendar:(CKCalendarView *)calendar willSelectDate:(NSDate *)date {
