@@ -31,39 +31,6 @@
 
 
 @class CALayer;
-@class CAGradientLayer;
-
-@interface GradientView : UIView
-
-@property(nonatomic, strong, readonly) CAGradientLayer *gradientLayer;
-- (void)setColors:(NSArray *)colors;
-
-@end
-
-@implementation GradientView
-
-- (id)init {
-    return [self initWithFrame:CGRectZero];
-}
-
-+ (Class)layerClass {
-    return [CAGradientLayer class];
-}
-
-- (CAGradientLayer *)gradientLayer {
-    return (CAGradientLayer *)self.layer;
-}
-
-- (void)setColors:(NSArray *)colors {
-    NSMutableArray *cgColors = [NSMutableArray array];
-    for (UIColor *color in colors) {
-        [cgColors addObject:(__bridge id)color.CGColor];
-    }
-    self.gradientLayer.colors = cgColors;
-}
-
-@end
-
 
 @interface DateButton : UIButton
 
@@ -109,7 +76,7 @@
 @property(nonatomic, strong) UIButton *prevButton;
 @property(nonatomic, strong) UIButton *nextButton;
 @property(nonatomic, strong) UIView *calendarContainer;
-@property(nonatomic, strong) GradientView *daysHeader;
+@property(nonatomic, strong) UIView *daysHeader;
 @property(nonatomic, strong) NSArray *dayOfWeekLabels;
 @property(nonatomic, strong) NSMutableArray *dateButtons;
 @property(nonatomic, strong) NSDateFormatter *dateFormatter;
@@ -187,7 +154,7 @@
     [self addSubview:calendarContainer];
     self.calendarContainer = calendarContainer;
 
-    GradientView *daysHeader = [[GradientView alloc] initWithFrame:CGRectZero];
+    UIView *daysHeader = [[UIView alloc] initWithFrame:CGRectZero];
     daysHeader.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
     [self.calendarContainer addSubview:daysHeader];
     self.daysHeader = daysHeader;
@@ -423,7 +390,7 @@
 
     [self setDayOfWeekFont:[UIFont boldSystemFontOfSize:12.0]];
     [self setDayOfWeekTextColor:UIColorFromRGB(0x999999)];
-    [self setDayOfWeekBottomColor:UIColorFromRGB(0xCCCFD5) topColor:[UIColor whiteColor]];
+    [self setDayOfWeekBackgroundColor:UIColorFromRGB(0xCCCFD5)];
 
     [self setDateFont:[UIFont boldSystemFontOfSize:16.0f]];
     [self setDateBorderColor:UIColorFromRGB(0xDAE1E6)];
@@ -527,8 +494,8 @@
     return (self.dayOfWeekLabels.count > 0) ? ((UILabel *)[self.dayOfWeekLabels lastObject]).textColor : nil;
 }
 
-- (void)setDayOfWeekBottomColor:(UIColor *)bottomColor topColor:(UIColor *)topColor {
-    [self.daysHeader setColors:[NSArray arrayWithObjects:topColor, bottomColor, nil]];
+- (void)setDayOfWeekBackgroundColor:(UIColor *)color {
+    [self.daysHeader setBackgroundColor:color];
 }
 
 - (void)setDateFont:(UIFont *)font {
