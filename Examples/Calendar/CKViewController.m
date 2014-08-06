@@ -34,7 +34,7 @@
         calendar.onlyShowCurrentMonth = NO;
         calendar.adaptHeightToNumberOfWeeksInMonth = YES;
 
-        calendar.frame = CGRectMake(10, 10, 300, 320);
+        calendar.frame = CGRectMake(0, 100, 320, 320);
         [self.view addSubview:calendar];
 
         self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(calendar.frame) + 4, self.view.bounds.size.width, 24)];
