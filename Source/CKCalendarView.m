@@ -21,7 +21,7 @@
 #import "CKCalendarView.h"
 
 #define BUTTON_MARGIN 4
-#define CALENDAR_MARGIN 2.5f
+#define CALENDAR_MARGIN 0
 #define TOP_HEIGHT 44
 #define DAYS_HEADER_HEIGHT 22
 #define DEFAULT_CELL_WIDTH 43
@@ -71,20 +71,21 @@
 
 @interface CKCalendarView ()
 
-@property(nonatomic, strong) UIView *highlight;
-@property(nonatomic, strong) UILabel *titleLabel;
-@property(nonatomic, strong) UIButton *prevButton;
-@property(nonatomic, strong) UIButton *nextButton;
-@property(nonatomic, strong) UIView *calendarContainer;
-@property(nonatomic, strong) UIView *daysHeader;
-@property(nonatomic, strong) NSArray *dayOfWeekLabels;
-@property(nonatomic, strong) NSMutableArray *dateButtons;
-@property(nonatomic, strong) NSDateFormatter *dateFormatter;
+@property (nonatomic, strong) UIView *highlight;
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UIButton *prevButton;
+@property (nonatomic, strong) UIButton *nextButton;
+@property (nonatomic, strong) UIView *calendarContainer;
+@property (nonatomic, strong) UIView *daysHeader;
+@property (nonatomic, strong) NSArray *dayOfWeekLabels;
+@property (nonatomic, strong) NSMutableArray *dateButtons;
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
 @property (nonatomic, strong) NSDate *monthShowing;
 @property (nonatomic, strong) NSDate *selectedDate;
 @property (nonatomic, strong) NSCalendar *calendar;
-@property(nonatomic, assign) CGFloat cellWidth;
+@property (nonatomic, assign) CGFloat cellWidth;
+@property (nonatomic, assign) CGFloat cellOffset;
 
 @end
 
@@ -105,6 +106,7 @@
     [self.calendar setLocale:[NSLocale currentLocale]];
 
     self.cellWidth = DEFAULT_CELL_WIDTH;
+    self.cellOffset = 0.0f;
 
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setTimeStyle:NSDateFormatterNoStyle];
@@ -202,6 +204,7 @@
 
     CGFloat containerWidth = self.bounds.size.width - (CALENDAR_MARGIN * 2);
     self.cellWidth = (floorf(containerWidth / 7.0)) - CELL_BORDER_WIDTH;
+    self.cellOffset = (containerWidth - ((self.cellWidth + CELL_BORDER_WIDTH) * 7.0f)) / 2.0f;
 
     NSInteger numberOfWeeksToShow = 6;
     if (self.adaptHeightToNumberOfWeeksInMonth) {
@@ -223,7 +226,7 @@
     self.calendarContainer.frame = CGRectMake(CALENDAR_MARGIN, CGRectGetMaxY(self.titleLabel.frame), containerWidth, containerHeight);
     self.daysHeader.frame = CGRectMake(0, 0, self.calendarContainer.frame.size.width, DAYS_HEADER_HEIGHT);
 
-    CGRect lastDayFrame = CGRectZero;
+    CGRect lastDayFrame = CGRectMake(0, 0, self.cellOffset, 0);
     for (UILabel *dayLabel in self.dayOfWeekLabels) {
         dayLabel.frame = CGRectMake(CGRectGetMaxX(lastDayFrame) + CELL_BORDER_WIDTH, lastDayFrame.origin.y, self.cellWidth, self.daysHeader.frame.size.height);
         lastDayFrame = dayLabel.frame;
@@ -390,7 +393,7 @@
 	
     NSInteger placeInWeek = [self _placeInWeekForDate:date];
 
-    return CGRectMake(placeInWeek * (self.cellWidth + CELL_BORDER_WIDTH), (row * (self.cellWidth + CELL_BORDER_WIDTH)) + CGRectGetMaxY(self.daysHeader.frame) + CELL_BORDER_WIDTH, self.cellWidth, self.cellWidth);
+    return CGRectMake(self.cellOffset + placeInWeek * (self.cellWidth + CELL_BORDER_WIDTH), (row * (self.cellWidth + CELL_BORDER_WIDTH)) + CGRectGetMaxY(self.daysHeader.frame) + CELL_BORDER_WIDTH, self.cellWidth, self.cellWidth);
 }
 
 - (void)_moveCalendarToNextMonth {

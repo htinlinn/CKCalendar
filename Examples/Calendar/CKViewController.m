@@ -21,9 +21,10 @@
 		self.calendar = calendar;
 		calendar.delegate = self;
 
+//        calendar.backgroundColor = [UIColor whiteColor];
 		calendar.titleColor = [UIColor blackColor];
         [calendar setDayOfWeekBackgroundColor:[UIColor grayColor]];
-        [calendar setDateBorderColor:[UIColor whiteColor]];
+//        [calendar setDateBorderColor:[UIColor whiteColor]];
 
 
 		self.dateFormatter = [[NSDateFormatter alloc] init];
@@ -31,9 +32,9 @@
 		self.minimumDate = [self.dateFormatter dateFromString:@"20/09/2012"];
 
 		self.disabledDates = @[
-                               [self.dateFormatter dateFromString:@"05/01/2013"],
-                               [self.dateFormatter dateFromString:@"06/01/2013"],
-                               [self.dateFormatter dateFromString:@"07/01/2013"]
+                               [self.dateFormatter dateFromString:@"05/08/2014"],
+                               [self.dateFormatter dateFromString:@"06/08/2014"],
+                               [self.dateFormatter dateFromString:@"07/08/2014"]
                                ];
 
 		calendar.onlyShowCurrentMonth = NO;
