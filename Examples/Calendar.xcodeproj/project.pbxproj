@@ -16,6 +16,10 @@
 		1D2391395A8710F3E85A74 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D2391395A8710F3E85A73 /* QuartzCore.framework */; };
 		1D2391395A8710F3E85A76 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D2391395A8710F3E85A75 /* CoreGraphics.framework */; };
 		1D2391395A8710F3E85A85 /* CKCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2391395A8710F3E85A84 /* CKCalendarView.m */; };
+		4881139C1992D1F300B5BAF5 /* double_right_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 488113981992D1F300B5BAF5 /* double_right_arrow@2x.png */; };
+		4881139D1992D1F300B5BAF5 /* double_left_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 488113991992D1F300B5BAF5 /* double_left_arrow.png */; };
+		4881139E1992D1F300B5BAF5 /* double_right_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4881139A1992D1F300B5BAF5 /* double_right_arrow.png */; };
+		4881139F1992D1F300B5BAF5 /* double_left_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4881139B1992D1F300B5BAF5 /* double_left_arrow@2x.png */; };
 		48DAB83A1992BCCB0086E7DB /* right_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48DAB8381992BCCB0086E7DB /* right_arrow@2x.png */; };
 		48DAB83B1992BCCB0086E7DB /* right_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 48DAB8391992BCCB0086E7DB /* right_arrow.png */; };
 		48DAB83E1992BD560086E7DB /* left_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 48DAB83C1992BD560086E7DB /* left_arrow.png */; };
@@ -39,6 +43,10 @@
 		1D2391395A8710F3E85A75 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		1D2391395A8710F3E85A83 /* CKCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKCalendarView.h; path = ../../Source/CKCalendarView.h; sourceTree = "<group>"; };
 		1D2391395A8710F3E85A84 /* CKCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CKCalendarView.m; path = ../../Source/CKCalendarView.m; sourceTree = "<group>"; };
+		488113981992D1F300B5BAF5 /* double_right_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "double_right_arrow@2x.png"; sourceTree = "<group>"; };
+		488113991992D1F300B5BAF5 /* double_left_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = double_left_arrow.png; sourceTree = "<group>"; };
+		4881139A1992D1F300B5BAF5 /* double_right_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = double_right_arrow.png; sourceTree = "<group>"; };
+		4881139B1992D1F300B5BAF5 /* double_left_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "double_left_arrow@2x.png"; sourceTree = "<group>"; };
 		48DAB8381992BCCB0086E7DB /* right_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right_arrow@2x.png"; sourceTree = "<group>"; };
 		48DAB8391992BCCB0086E7DB /* right_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_arrow.png; sourceTree = "<group>"; };
 		48DAB83C1992BD560086E7DB /* left_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left_arrow.png; sourceTree = "<group>"; };
@@ -123,6 +131,10 @@
 				48DAB8391992BCCB0086E7DB /* right_arrow.png */,
 				48DAB83C1992BD560086E7DB /* left_arrow.png */,
 				48DAB83D1992BD560086E7DB /* left_arrow@2x.png */,
+				488113981992D1F300B5BAF5 /* double_right_arrow@2x.png */,
+				488113991992D1F300B5BAF5 /* double_left_arrow.png */,
+				4881139A1992D1F300B5BAF5 /* double_right_arrow.png */,
+				4881139B1992D1F300B5BAF5 /* double_left_arrow@2x.png */,
 			);
 			name = resources;
 			sourceTree = "<group>";
@@ -178,10 +190,14 @@
 			files = (
 				48DAB83F1992BD560086E7DB /* left_arrow@2x.png in Resources */,
 				1D2391395A8710F3E85A5F /* InfoPlist.strings in Resources */,
+				4881139E1992D1F300B5BAF5 /* double_right_arrow.png in Resources */,
 				48DAB83B1992BCCB0086E7DB /* right_arrow.png in Resources */,
+				4881139F1992D1F300B5BAF5 /* double_left_arrow@2x.png in Resources */,
 				48DAB84E1992C97E0086E7DB /* Images.xcassets in Resources */,
+				4881139C1992D1F300B5BAF5 /* double_right_arrow@2x.png in Resources */,
 				48DAB83E1992BD560086E7DB /* left_arrow.png in Resources */,
 				48DAB83A1992BCCB0086E7DB /* right_arrow@2x.png in Resources */,
+				4881139D1992D1F300B5BAF5 /* double_left_arrow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,50 +14,51 @@
 
 @implementation CKViewController
 
-- (id)init {
-	self = [super init];
-	if (self) {
-		self.view.backgroundColor = [UIColor whiteColor];
+- (void)loadView
+{
+    [super loadView];
 
-		self.calendar = [[CKCalendarView alloc] initWithStartDay:startMonday];
-        self.calendar.frame = CGRectMake(0, 20, 320, 320);
-		self.calendar.delegate = self;
+    self.view.backgroundColor = [UIColor whiteColor];
 
-        [self.calendar setBackgroundColor:[UIColor whiteColor]];
-		[self.calendar setTitleColor:[UIColor blackColor]];
-        [self.calendar setDayOfWeekBackgroundColor:[UIColor darkGrayColor]];
-        [self.calendar setDateBorderColor:[UIColor whiteColor]];
-        [self.calendar setMonthButtonColor:[UIColor orangeColor]];
+    self.calendar = [[CKCalendarView alloc] initWithStartDay:startMonday];
+    self.calendar.frame = CGRectMake(0, 20, 320, 320);
+    self.calendar.delegate = self;
 
-        self.calendar.titleFont = [UIFont fontWithName:@"GillSans-Bold" size:16.0f];
-        self.calendar.dayOfWeekFont = [UIFont fontWithName:@"GillSans-Bold" size:12.0f];
-        self.calendar.dateFont = [UIFont fontWithName:@"GillSans" size:16.0f];
+    [self.calendar setBackgroundColor:[UIColor whiteColor]];
+    [self.calendar setTitleColor:[UIColor blackColor]];
+    [self.calendar setDayOfWeekBackgroundColor:[UIColor darkGrayColor]];
+    [self.calendar setDateBorderColor:[UIColor whiteColor]];
+    [self.calendar setMonthButtonColor:[UIColor orangeColor]];
 
-		self.calendar.onlyShowCurrentMonth = NO;
-		self.calendar.adaptHeightToNumberOfWeeksInMonth = YES;
+    self.calendar.titleFont = [UIFont fontWithName:@"GillSans-Bold" size:16.0f];
+    self.calendar.dayOfWeekFont = [UIFont fontWithName:@"GillSans-Bold" size:12.0f];
+    self.calendar.dateFont = [UIFont fontWithName:@"GillSans" size:16.0f];
 
-		[self.view addSubview:self.calendar];
+    self.calendar.onlyShowCurrentMonth = NO;
+    self.calendar.adaptHeightToNumberOfWeeksInMonth = YES;
 
-        self.dateFormatter = [[NSDateFormatter alloc] init];
-		[self.dateFormatter setDateFormat:@"dd/MM/yyyy"];
+    [self.view addSubview:self.calendar];
 
-		self.minimumDate = [self.dateFormatter dateFromString:@"20/09/2012"];
-		self.disabledDates = @[
-                               [self.dateFormatter dateFromString:@"08/08/2014"],
-                               [self.dateFormatter dateFromString:@"09/08/2014"],
-                               [self.dateFormatter dateFromString:@"07/08/2014"]
-                               ];
+    self.dateFormatter = [[NSDateFormatter alloc] init];
+    [self.dateFormatter setDateFormat:@"dd/MM/yyyy"];
 
-		self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.calendar.frame) + 50, self.view.bounds.size.width, 50)];
-        self.dateLabel.textAlignment = NSTextAlignmentCenter;
-        self.dateLabel.font = [UIFont fontWithName:@"GillSans" size:50.0f];
-		[self.view addSubview:self.dateLabel];
+    self.minimumDate = [self.dateFormatter dateFromString:@"20/09/2012"];
 
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localeDidChange)
-                                                     name:NSCurrentLocaleDidChangeNotification
-                                                   object:nil];
-	}
-	return self;
+    NSDate *today = [NSDate date];
+    self.disabledDates = @[
+                           [today dateByAddingTimeInterval:86400],
+                           [today dateByAddingTimeInterval:86400 * 2],
+                           [today dateByAddingTimeInterval:86400 * 3]
+                           ];
+
+    self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.calendar.frame) + 50, self.view.bounds.size.width, 50)];
+    self.dateLabel.textAlignment = NSTextAlignmentCenter;
+    self.dateLabel.font = [UIFont fontWithName:@"GillSans" size:60.0f];
+    [self.view addSubview:self.dateLabel];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localeDidChange)
+                                                 name:NSCurrentLocaleDidChangeNotification
+                                               object:nil];
 }
 
 - (void)dealloc {
@@ -66,12 +67,8 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-}
 
-- (void)viewDidUnload {
-	[super viewDidUnload];
-	// Release any retained subviews of the main view.
+    [self.calendar selectDate:[NSDate date] makeVisible:YES];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -89,9 +86,9 @@
 
 - (BOOL)dateIsDisabled:(NSDate *)date {
 	for (NSDate *disabledDate in self.disabledDates) {
-		if ([disabledDate isEqualToDate:date]) {
-			return YES;
-		}
+        if ([self.calendar date:disabledDate isSameDayAsDate:date]) {
+            return YES;
+        }
 	}
 	return NO;
 }

@@ -21,7 +21,6 @@
 #import "CKCalendarView.h"
 
 #define BUTTON_MARGIN_Y 4
-#define BUTTON_MARGIN_X 50
 #define CALENDAR_MARGIN 0
 #define TOP_HEIGHT 44
 #define DAYS_HEADER_HEIGHT 35
@@ -74,8 +73,10 @@
 
 @property (nonatomic, strong) UIView *highlight;
 @property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UIButton *prevButton;
-@property (nonatomic, strong) UIButton *nextButton;
+@property (nonatomic, strong) UIButton *prevMonthButton;
+@property (nonatomic, strong) UIButton *nextMonthButton;
+@property (nonatomic, strong) UIButton *prevYearButton;
+@property (nonatomic, strong) UIButton *nextYearButton;
 @property (nonatomic, strong) UIView *calendarContainer;
 @property (nonatomic, strong) UIView *daysHeader;
 @property (nonatomic, strong) NSArray *dayOfWeekLabels;
@@ -125,21 +126,37 @@
 	[self addSubview:titleLabel];
 	self.titleLabel = titleLabel;
 
-	UIButton *prevButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [prevButton setImage:[[UIImage imageNamed:@"left_arrow.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-                     forState:UIControlStateNormal];
-	prevButton.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
-	[prevButton addTarget:self action:@selector(_moveCalendarToPreviousMonth) forControlEvents:UIControlEventTouchUpInside];
-	[self addSubview:prevButton];
-	self.prevButton = prevButton;
+	UIButton *prevMonthButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[prevMonthButton setImage:[[UIImage imageNamed:@"left_arrow.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+	                 forState:UIControlStateNormal];
+	prevMonthButton.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
+	[prevMonthButton addTarget:self action:@selector(_moveCalendarToPreviousMonth) forControlEvents:UIControlEventTouchUpInside];
+	[self addSubview:prevMonthButton];
+	self.prevMonthButton = prevMonthButton;
 
-	UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [nextButton setImage:[[UIImage imageNamed:@"right_arrow.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-                     forState:UIControlStateNormal];
-	nextButton.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin;
-	[nextButton addTarget:self action:@selector(_moveCalendarToNextMonth) forControlEvents:UIControlEventTouchUpInside];
-	[self addSubview:nextButton];
-	self.nextButton = nextButton;
+	UIButton *nextMonthButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[nextMonthButton setImage:[[UIImage imageNamed:@"right_arrow.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+	                 forState:UIControlStateNormal];
+	nextMonthButton.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin;
+	[nextMonthButton addTarget:self action:@selector(_moveCalendarToNextMonth) forControlEvents:UIControlEventTouchUpInside];
+	[self addSubview:nextMonthButton];
+	self.nextMonthButton = nextMonthButton;
+
+	UIButton *prevYearButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[prevYearButton setImage:[[UIImage imageNamed:@"double_left_arrow.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+	                forState:UIControlStateNormal];
+	prevYearButton.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
+	[prevYearButton addTarget:self action:@selector(_moveCalendarToPreviousYear) forControlEvents:UIControlEventTouchUpInside];
+	[self addSubview:prevYearButton];
+	self.prevYearButton = prevYearButton;
+
+	UIButton *nextYearButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[nextYearButton setImage:[[UIImage imageNamed:@"double_right_arrow.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+	                forState:UIControlStateNormal];
+	nextYearButton.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin;
+	[nextYearButton addTarget:self action:@selector(_moveCalendarToNextYear) forControlEvents:UIControlEventTouchUpInside];
+	[self addSubview:nextYearButton];
+	self.nextYearButton = nextYearButton;
 
 	// THE CALENDAR ITSELF
 	UIView *calendarContainer = [[UIView alloc] initWithFrame:CGRectZero];
@@ -223,8 +240,10 @@
 
 	self.titleLabel.text = [self.dateFormatter stringFromDate:_monthShowing];
 	self.titleLabel.frame = CGRectMake(0, 0, self.bounds.size.width, TOP_HEIGHT);
-	self.prevButton.frame = CGRectMake(BUTTON_MARGIN_X, BUTTON_MARGIN_Y, self.prevButton.imageView.image.size.width, 38);
-	self.nextButton.frame = CGRectMake(self.bounds.size.width - self.nextButton.imageView.image.size.width - BUTTON_MARGIN_X, BUTTON_MARGIN_Y, self.nextButton.imageView.image.size.width, 38);
+	self.prevMonthButton.frame = CGRectMake(self.skipMonthButtonInset, BUTTON_MARGIN_Y, self.prevMonthButton.imageView.image.size.width, 38);
+	self.nextMonthButton.frame = CGRectMake(self.bounds.size.width - self.nextMonthButton.imageView.image.size.width - self.skipMonthButtonInset, BUTTON_MARGIN_Y, self.nextMonthButton.imageView.image.size.width, 38);
+	self.prevYearButton.frame = CGRectMake(self.skipYearButtonInset, BUTTON_MARGIN_Y, self.prevYearButton.imageView.image.size.width, 38);
+	self.nextYearButton.frame = CGRectMake(self.bounds.size.width - self.nextYearButton.imageView.image.size.width - self.skipYearButtonInset, BUTTON_MARGIN_Y, self.nextYearButton.imageView.image.size.width, 38);
 
 	self.calendarContainer.frame = CGRectMake(CALENDAR_MARGIN, CGRectGetMaxY(self.titleLabel.frame), containerWidth, containerHeight);
 	self.daysHeader.frame = CGRectMake(0, 0, self.calendarContainer.frame.size.width, DAYS_HEADER_HEIGHT);
@@ -261,7 +280,7 @@
 
 		CKDateItem *item = [[CKDateItem alloc] init];
 
-        if ([self _dateIsToday:dateButton.date]) {
+		if ([self _dateIsToday:dateButton.date]) {
 			item.textColor = UIColorFromRGB(0xF2F2F2);
 			item.backgroundColor = [UIColor lightGrayColor];
 		}
@@ -363,10 +382,11 @@
 		[datesToReload addObject:date];
 	}
 	self.selectedDate = date;
-	[self reloadDates:datesToReload];
+
 	if (visible && date) {
 		self.monthShowing = date;
 	}
+	[self setNeedsLayout];
 }
 
 - (void)reloadData {
@@ -374,13 +394,11 @@
 	[self setNeedsLayout];
 }
 
-- (void)reloadDates:(NSArray *)dates {
-	// TODO: only update the dates specified
-	[self setNeedsLayout];
-}
-
 - (void)_setDefaultStyle {
 	self.backgroundColor = UIColorFromRGB(0x393B40);
+
+	self.skipYearButtonInset = 15;
+	self.skipMonthButtonInset = 70;
 
 	[self setTitleColor:[UIColor whiteColor]];
 	[self setTitleFont:[UIFont boldSystemFontOfSize:17.0]];
@@ -402,10 +420,7 @@
 	return CGRectMake(self.cellOffset + placeInWeek * (self.cellWidth + CELL_BORDER_WIDTH), (row * (self.cellWidth + CELL_BORDER_WIDTH)) + CGRectGetMaxY(self.daysHeader.frame) + CELL_BORDER_WIDTH, self.cellWidth, self.cellWidth);
 }
 
-- (void)_moveCalendarToNextMonth {
-	NSDateComponents *comps = [[NSDateComponents alloc] init];
-	[comps setMonth:1];
-	NSDate *newMonth = [self.calendar dateByAddingComponents:comps toDate:self.monthShowing options:0];
+- (void)_moveCalendarToMonth:(NSDate *)newMonth {
 	if ([self.delegate respondsToSelector:@selector(calendar:willChangeToMonth:)] && ![self.delegate calendar:self willChangeToMonth:newMonth]) {
 		return;
 	}
@@ -417,19 +432,28 @@
 	}
 }
 
+- (void)_moveCalendarToNextMonth {
+	NSDateComponents *comps = [[NSDateComponents alloc] init];
+	[comps setMonth:1];
+	[self _moveCalendarToMonth:[self.calendar dateByAddingComponents:comps toDate:self.monthShowing options:0]];
+}
+
 - (void)_moveCalendarToPreviousMonth {
 	NSDateComponents *comps = [[NSDateComponents alloc] init];
 	[comps setMonth:-1];
-	NSDate *newMonth = [self.calendar dateByAddingComponents:comps toDate:self.monthShowing options:0];
-	if ([self.delegate respondsToSelector:@selector(calendar:willChangeToMonth:)] && ![self.delegate calendar:self willChangeToMonth:newMonth]) {
-		return;
-	}
-	else {
-		self.monthShowing = newMonth;
-		if ([self.delegate respondsToSelector:@selector(calendar:didChangeToMonth:)]) {
-			[self.delegate calendar:self didChangeToMonth:self.monthShowing];
-		}
-	}
+	[self _moveCalendarToMonth:[self.calendar dateByAddingComponents:comps toDate:self.monthShowing options:0]];
+}
+
+- (void)_moveCalendarToNextYear {
+	NSDateComponents *comps = [[NSDateComponents alloc] init];
+	[comps setYear:1];
+	[self _moveCalendarToMonth:[self.calendar dateByAddingComponents:comps toDate:self.monthShowing options:0]];
+}
+
+- (void)_moveCalendarToPreviousYear {
+	NSDateComponents *comps = [[NSDateComponents alloc] init];
+	[comps setYear:-1];
+	[self _moveCalendarToMonth:[self.calendar dateByAddingComponents:comps toDate:self.monthShowing options:0]];
 }
 
 - (void)_dateButtonPressed:(id)sender {
@@ -470,8 +494,10 @@
 }
 
 - (void)setMonthButtonColor:(UIColor *)color {
-    self.prevButton.tintColor = color;
-    self.nextButton.tintColor = color;
+	self.prevMonthButton.tintColor = color;
+	self.nextMonthButton.tintColor = color;
+	self.prevYearButton.tintColor = color;
+	self.nextYearButton.tintColor = color;
 }
 
 - (void)setInnerBorderColor:(UIColor *)color {

@@ -52,6 +52,8 @@ typedef enum {
 @property (nonatomic, strong) UIFont *dayOfWeekFont;
 @property (nonatomic, strong) UIColor *dayOfWeekTextColor;
 @property (nonatomic, strong) UIFont *dateFont;
+@property (nonatomic, assign) CGFloat skipMonthButtonInset;
+@property (nonatomic, assign) CGFloat skipYearButtonInset;
 
 - (void)setMonthButtonColor:(UIColor *)color;
 - (void)setInnerBorderColor:(UIColor *)color;
@@ -60,7 +62,6 @@ typedef enum {
 
 - (void)selectDate:(NSDate *)date makeVisible:(BOOL)visible;
 - (void)reloadData;
-- (void)reloadDates:(NSArray *)dates;
 
 // Helper methods for delegates, etc.
 - (BOOL)date:(NSDate *)date1 isSameDayAsDate:(NSDate *)date2;
